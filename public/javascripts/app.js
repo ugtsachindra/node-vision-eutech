@@ -71,7 +71,7 @@ $(() => {
           labelsElement.removeClass('hidden');
           errorElement.addClass('hidden');
         } catch (error) {
-          // this probably means that responose is not what we expected
+          // this probably means that response is not what we expected
           alert('Unrecoverable Error: ' + error);
         }
       }).fail(jqXHR => {
@@ -89,7 +89,7 @@ $(() => {
           labelsElement.addClass('hidden');
           errorElement.removeClass('hidden');
         } catch (error) {
-          // this probably means that responose is not what we expected
+          // this probably means that response is not what we expected
           alert('Unrecoverable Error: ' + error);
         }
       }).always(() => { // make sure to enable submit button after we get any result
@@ -127,6 +127,6 @@ $(() => {
 
   resetButton.on('click', resetForm);
 
-  // clear form on readys
+  // clear form on ready
   resetForm();
 });
