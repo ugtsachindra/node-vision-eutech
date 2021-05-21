@@ -1,8 +1,17 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "sans-serif, Lucida Grande", Helvetica, Arial;
 }
 
 a {
   color: #00B7FF;
+}
+
+.error {
+  color: #ec5121ef;
+  font-weight: 700;
+}
+
+.hidden {
+  display: none;
 }
