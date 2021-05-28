@@ -2,9 +2,11 @@ $(() => {
   let labelsElement = $('#labels');
   let labelListElement = $('#label-list');
   let errorElement = $('#error');
-  let submitButton = $("button#classify");
-  let resetButton = $("button#reset");
+  let submitButton = $('#classify');
+  let resetButton = $('#reset');
   let inputFileElement = $('#file');
+  let imagePreviewElement = $('#preview');
+  let canSubmit = false;
 
   inputFileElement.on('change', () => {
     let files = inputFileElement.prop('files');
@@ -19,12 +21,35 @@ $(() => {
         return;
       }
 
+      previewImage(files[0], imageUrl => {
+        imagePreviewElement.css('background-image', 'url(' + imageUrl + ')');
+        imagePreviewElement.removeClass('hidden');
+      });
+
       // we are safe to enable submit
       enableSubmitButton(); 
     }
   });
 
+  function previewImage(file, callback) {
+    var reader = new FileReader();
+
+    reader.addEventListener("load", function() {
+      if (!!callback) {
+        callback(reader.result);
+      }
+    }, false);
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
   function submitForm() {
+    if (!canSubmit) {
+      return;
+    }
+
     try {
       let url = '/vision/classify';
       submittingForm = true;
@@ -61,7 +86,7 @@ $(() => {
           labelListElement.empty();
 
           labels.forEach(label => {
-            let labelItem = $('<li />');
+            let labelItem = $('<div class=\'list-item\' />');
             
             labelItem.text(label);
             
@@ -72,7 +97,7 @@ $(() => {
           errorElement.addClass('hidden');
         } catch (error) {
           // this probably means that response is not what we expected
-          alert('Unrecoverable Error: ' + error);
+          setError('Unrecoverable Error: ' + error);
         }
       }).fail(jqXHR => {
         console.error('Error: ' + jqXHR.responseText);
@@ -83,29 +108,38 @@ $(() => {
           if (!errorThrown.error) {
             throw 'Error message not found';
           }
-  
-          errorElement.text(errorThrown.error);
-  
-          labelsElement.addClass('hidden');
-          errorElement.removeClass('hidden');
+
+          setError(errorThrown.error);
         } catch (error) {
           // this probably means that response is not what we expected
-          alert('Unrecoverable Error: ' + error);
+          setError('Unrecoverable Error: ' + error);
         }
       }).always(() => { // make sure to enable submit button after we get any result
         enableSubmitButton();
       });
     } catch (error) { // make sure to enable submit button on any errors
       console.error('Error submitting form: ' + error);
-      alert('Error submitting form: ' + error);
+      
+      setError('Error submitting form: ' + error);
 
       enableSubmitButton();
     }
   }
 
+  function setError(error) {
+    errorElement.text(error);
+  
+    labelsElement.addClass('hidden');
+    errorElement.removeClass('hidden');
+  }
+
   function resetForm() {
     // reset file
     inputFileElement.val(null);
+
+    // reset image preview
+    imagePreviewElement.css('background-image', '');
+    imagePreviewElement.addClass('hidden');
 
     // hide result & error section
     labelListElement.empty();
@@ -116,11 +150,13 @@ $(() => {
   }
 
   function enableSubmitButton() {
-    submitButton.text('Classify').prop("disabled", false);
+    canSubmit = true;
+
+    submitButton.text('Classify').removeClass('disabled');
   }
 
   function disableSubmitButton() {
-    submitButton.prop("disabled", true);
+    submitButton.addClass('disabled');
   }
 
   submitButton.on('click', submitForm);

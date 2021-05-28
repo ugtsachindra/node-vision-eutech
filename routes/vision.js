@@ -17,7 +17,7 @@ router.post('/classify', function(req, res, next) {
    * }
    * ```
    * 
-   * 3. Handle any errors that occur while calling the backend or procesesing the response, set the appropriate HTTP status code and return the error in JSON format as below (might want to check out the ExpressJS documentation!),
+   * 3. Handle any errors that occur while calling the backend or procesesing the response, set the appropriate HTTP status code and return the error in JSON format as below (might want to check out the ExpressJS documentation!).
    * 
    * ```
    * {
