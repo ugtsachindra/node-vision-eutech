@@ -1,6 +1,6 @@
 # Node Vision
 
-This is a ExpressJS application that provides the framework on top of which you can implement multiple backends to classify images.
+This is a ExpressJS application that provides the framework on top of which you can implement multiple backends to detect labels in images.
 
 ## What is the purpose of this exercise?
 
@@ -13,7 +13,7 @@ The purpose of this exercise is to assess the following,
 
 ## What you will be implementing?
 
-You will be implementing a backend to classify images using *AWS Rekognition* API. You will be shared temporary AWS access keys for authenticating with the Rekognintion API.
+You will be implementing a backend to detect label in images using *AWS Rekognition* API. You will be shared temporary AWS access keys for authenticating with the Rekognintion API.
 
 *Optionally*, you can implement any *additional* backends of your choice, for example *Google Vision*.
 
@@ -27,7 +27,7 @@ You will be implementing a backend to classify images using *AWS Rekognition* AP
 
 ## Instructions
 
-* You will have to modify *routes/vision.js* to implement your backend code for classifying images. The file will have comments to show you where your code goes.
+* You will have to modify *routes/vision.js* to implement your backend code for detecting labels in images. The file will have comments to show you where your code goes.
 * The file uploaded from the UI can be accessed using `req.files.file` & it will have the following properties,
   - **data** - A *JS buffer* that represent the uploaded file, returns empty buffer in case `useTempFiles` option was set to true.
   - **name** - **Example:** car.jpg.
@@ -50,4 +50,4 @@ You will be implementing a backend to classify images using *AWS Rekognition* AP
     }
     ```
 
-**NOTE:** You would only have to modify *routes/vision.js* *package.json* & *package-lock.json* (if you install any additional NodeJS packages).
+**NOTE:** You would only have to modify *routes/vision.js*, *package.json* & *package-lock.json* (if you install any additional NodeJS packages).
