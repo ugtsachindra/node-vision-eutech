@@ -51,3 +51,7 @@ You will be implementing a backend to detect label in images using *AWS Rekognit
     ```
 
 **NOTE:** You would only have to modify *routes/vision.js*, *package.json* & *package-lock.json* (if you install any additional NodeJS packages).
+
+## Sample
+
+![Sample](public/images/node-vision-sample.gif)
